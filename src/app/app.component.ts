@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'iron-ledger';
+  bodyParts: Observable<any[]>;
+  muscles: Observable<any[]>;
+
+  constructor(
+    db: AngularFirestore,
+  ) {
+    this.bodyParts = db.collection('/body-parts').valueChanges();
+    this.muscles = db.collection('/muscles').valueChanges();
+  }
 }
